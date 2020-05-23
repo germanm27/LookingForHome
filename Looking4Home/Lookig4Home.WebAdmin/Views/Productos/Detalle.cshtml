@@ -1,0 +1,178 @@
+﻿@model Looking4Home.BL.Producto
+
+@{
+    ViewBag.Title = "Detalle";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendedor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendedor.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Etiqueta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Etiqueta.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estructura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estructura.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Localizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Localizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parking)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bano)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Habitaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Habitaciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Metros)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Metros)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt style="padding-top: 10px;">
+            @Html.DisplayNameFor(model => model.UrlImagen)
+        </dt>
+
+        <dd>
+            <img src="@Model.UrlImagen" alt="@Model.Descripcion" style="width:200px; height:auto; padding-top:10px" />
+        </dd>
+
+        <dt style="padding-top: 10px;">
+            @Html.DisplayNameFor(model => model.UrlImagen2)
+        </dt>
+
+        <dd>
+            <img src="@Model.UrlImagen2" alt="@Model.Descripcion" style="width:200px; height:auto; padding-top:10px" />
+        </dd>
+
+        <dt style="padding-top: 10px;">
+            @Html.DisplayNameFor(model => model.UrlImagen3)
+        </dt>
+
+        <dd>
+            <img src="@Model.UrlImagen3" alt="@Model.Descripcion" style="width:200px; height:auto; padding-top:10px" />
+        </dd>
+
+        <dt style="padding-top: 10px;">
+            @Html.DisplayNameFor(model => model.UrlImagen4)
+        </dt>
+
+        <dd>
+            <img src="@Model.UrlImagen4" alt="@Model.Descripcion" style="width:200px; height:auto; padding-top:10px" />
+        </dd>
+
+        <dt style="padding-top: 10px;">
+            @Html.DisplayNameFor(model => model.UrlImagen5)
+        </dt>
+
+        <dd>
+            <img src="@Model.UrlImagen5" alt="@Model.Descripcion" style="width:200px; height:auto; padding-top:10px" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Editar", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar a la Lista", "Index")
+</p>

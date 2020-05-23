@@ -1,0 +1,152 @@
+﻿@model IEnumerable<Looking4Home.BL.Producto>
+@{
+    ViewBag.Title = "Venta";
+}
+
+<hr>
+
+<!-- Search Result Section end -->
+<section class="search-result-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 p-0" style="max-width: 40%;">
+                <div class="search-result-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14376.077865872314!2d-73.879277264103!3d40.757667781624285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1546528920522" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="col-xl-6 p-0" style="max-width: 60%;">
+
+                <div class="search-results">
+
+                    <!--INICIO-->
+
+                    <!--COLOCAR AQUI AGREGAR COMPRA-->
+
+
+                    <h2 style="padding-left: 10px;">Productos</h2>
+                    <p style="color:black; padding-left: 40px;">
+                        @Html.ActionLink("Nuevo Producto", "Crear")
+                    </p>
+
+                    <table class="table">
+                        <tr>
+
+                        </tr>
+
+                    </table>
+
+                    <!--FINAL-->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Search Result Section end -->
+
+<hr>
+
+<!-- Top Properties Section Begin -->
+<div style="padding-top: 35px; padding-bottom: 15px;" class="top-properties-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="properties-title">
+                    <div class="section-title">
+                        <span>Propiedades en Renta</span>
+                        <h2>Exclusivas</h2>
+                    </div>
+                    <a href="#" class="top-property-all">Ver todas las propiedades</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="top-properties-carousel owl-carousel">
+            @foreach (var producto in Model.Where(r => r.Etiqueta.Descripcion == "Renta")
+           .Take(3)
+           .OrderBy(r => Guid.NewGuid())
+           )
+            {
+
+                <div class="single-top-properties">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="stp-pic">
+                                <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen)" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="stp-text">
+                                <div class="s-text">En @producto.Etiqueta.Descripcion</div>
+                                <h2>@producto.Estructura.Descripcion</h2>
+                                <div class="room-price">
+                                    <span>Comenzando desde:</span>
+                                    <h4>L. @producto.Precio</h4>
+                                </div>
+                                <div class="properties-location"><i class="fa fa-map-marker"></i>@producto.Localizacion</div>
+                                <p>@producto.Descripcion</p>
+                                <ul class="room-features">
+                                    <li>
+                                        <i class="fa fa-arrows"></i>
+                                        <p>@producto.Metros</p>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-bed"></i>
+                                        <p>@producto.Habitaciones</p>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-bath"></i>
+                                        <p>@producto.Bano</p>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-car"></i>
+                                        <p>@producto.Parking</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+<!-- Top Properties Section End -->
+
+<hr>
+
+@section scripts {
+    <script>
+    var arrItem = [];
+    var commaSeparatedIds = "";
+
+    $("#ItemList input[type=radio]").each(function (index, val) {
+        var checkId = $(val).attr("Id");
+
+        var arr = checkId.split('_');
+
+        var currentCheckboxId = arr[1];
+
+        var Ischecked = $("#" + checkId).is(":checked", true);
+
+        if (Ischecked) {
+            arrItem.push(currentCheckboxId);
+        }
+
+
+        if (index == 0) {
+            $('input#itemList').val(currentCheckboxId);
+        }
+    });
+
+    function setItemList(itemList) {
+        $('input#itemList').val(itemList);
+    }
+    </script>
+}

@@ -1,0 +1,278 @@
+﻿@using Pagination
+@using Pagination.Models
+@using Looking4Home.BL
+@using Lookig4Home.Web.Models
+@model IPageSourceModel<Producto, SearchModel>
+
+@{
+    ViewBag.Title = "Vista Compra";
+}
+
+@{
+    var results = Model.OrderBy(s => s.Descripcion).Query();
+    var productos = results.Results.Select(r => r);
+    var pages = results.LinkPages(PageLinker.CreateDynamic(true, "<<", ">>"));
+}
+
+
+    @if (Model != null)
+    {
+
+        <hr>
+
+        <!-- Single Property Section end -->
+        <section class="single-property-section spad">
+            <div class="container">
+            @foreach (var producto in productos.Where(r => r.Etiqueta.Descripcion == "Venta" && r.Categoria.Descripcion == "Casa")
+            .Take(1))       
+            {
+                <div class="row">
+                    <div class="col-lg-8" style="max-width: 850px;">
+                        <div class="pd-details-text">
+                            <div class="pd-details-social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-send"></i></a>
+                                <a href="#"><i class="fa fa-star"></i></a>
+                                <a href="#"><i class="fa fa-print"></i></a>
+                                <a href="#"><i class="fa fa-cloud-download"></i></a>
+                            </div>
+                            <div class="property-more-pic">
+                                <div class="product-pic-zoom">
+                                    <img style="max-width:100px;" class="product-big-img" src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen)" alt="">
+                                </div>
+                                <div class="product-thumbs">
+                                    <div class="product-thumbs-track ps-slider owl-carousel">
+                                        <div class="pt" data-imgbigurl="@(ViewBag.adminWebsiteUrl + producto.UrlImagen)">
+                                            <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen)" alt="">
+                                        </div>
+                                        <div class="pt active" data-imgbigurl="@(ViewBag.adminWebsiteUrl + producto.UrlImagen2)">
+                                            <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen2)" alt="">
+                                        </div>
+                                        <div class="pt" data-imgbigurl="@(ViewBag.adminWebsiteUrl + producto.UrlImagen3)">
+                                            <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen3)" alt="">
+                                        </div>
+                                        <div class="pt" data-imgbigurl="@(ViewBag.adminWebsiteUrl + producto.UrlImagen4)">
+                                            <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen4)" alt="">
+                                        </div>
+                                        <div class="pt" data-imgbigurl="@(ViewBag.adminWebsiteUrl + producto.UrlImagen5)">
+                                            <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen5)" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pd-desc">
+                                <h4>Descripción</h4>
+                                <p>
+                                    @producto.Descripcion
+                                </p>
+                            </div>
+                            <div class="pd-details-tab">
+                                <div class="tab-item">
+                                    <ul class="nav" role="tablist">
+                                        <li>
+                                            <a class="active" data-toggle="tab" href="#tab-1" role="tab">Detalles</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab-2" role="tab">Descripción</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab-3" role="tab">Comodidades</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-item-content">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                                            <div class="property-more-table">
+                                                <table class="left-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="pt-name">Precio</td>
+                                                            <td class="p-value">L. @producto.Precio</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Estructura</td>
+                                                            <td class="p-value">@producto.Estructura.Descripcion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Categoria</td>
+                                                            <td class="p-value">@producto.Categoria.Descripcion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Baños</td>
+                                                            <td class="p-value">@producto.Bano</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Cuartos</td>
+                                                            <td class="p-value">@producto.Habitaciones</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Estacionamiento</td>
+                                                            <td class="p-value">@producto.Parking</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Metros<sup>2</sup></td>
+                                                            <td class="p-value">@producto.Metros</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="right-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="pt-name">Vendedor</td>
+                                                            <td class="p-value">@producto.Vendedor.Nombre</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="pt-name">Ubicacion</td>
+                                                            <td class="p-value">@producto.Localizacion</td>
+                                                        </tr>
+                                                        <!--SIN IMPORTANCIA-->
+                                                        <tr>
+                                                            <td style="color:white;" class="pt-name">Contract type</td>
+                                                            <td style="color:white;" class="p-value">Sale</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="color:white;" class="pt-name">Beds</td>
+                                                            <td style="color:white;" class="p-value">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="color:white;" class="pt-name">Garages</td>
+                                                            <td style="color:white;" class="p-value">2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="color:white;" class="pt-name">Home area</td>
+                                                            <td style="color:white;" class="p-value">1200 sqft</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="color:white;" class="pt-name">Gara Size</td>
+                                                            <td style="color:white;" class="p-value">200 sqft</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                                            <div class="pd-table-desc">
+                                                <p>
+                                                      @producto.Descripcion
+                                                </p>
+                                                <p>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                                            <div class="pd-table-amenities">
+                                                <p>
+                                                    @producto.Descripcion
+                                                </p>
+                                                <p>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--CALCULADORA-->
+                        <div class="loan-calculator">
+                            <h4>Loan Calculator</h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Purchase Price" id="lc-price">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Interest Rate" id="lc-interest">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Down Payment" id="lc-dpay">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="loan-cal-result">Weekly Payments: <span id="lc-result">$0.00</span></div>
+                                    <div class="text-left text-sm-right">
+                                        <button class="site-btn sb-big" id="lc-submit">Apply for pre-Qualification</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--SEGUNDA COLUMNA-->
+                    <div class="col-lg-4 col-md-8 sidebar" style="max-width: 25%; left: 5px">
+                        <div class="agent-widget">
+                            <div class="pd-details-text">
+
+                                <!--COMUNICARSE CON AGENTE-->
+                                <div class="property-contactus">
+                                    <h4>Contactanos</h4>
+                                    <div class="row">
+                                        <div class="col-lg-5" style="flex: 0 0 100%; max-width: 100%; padding: 0px">
+                                            <div class="agent-desc">
+                                                <img src="@(ViewBag.adminWebsiteUrl + producto.Vendedor.UrlImagen)" alt="">
+                                                <div class="agent-title">
+                                                    <h5>Adam Smith</h5>
+                                                    <span>Saler Marketing</span>
+                                                </div>
+                                                <div class="agent-social">
+                                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                                    <a href="#"><i class="fa fa-envelope"></i></a>
+                                                </div>
+                                                <p>
+                                                    In today’s net-savvy world it has become common for any business to have a
+                                                    website which they use mostly for advertising their products and services.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-5" style="flex: 0 0 100%; max-width: 100%; padding: 0px">
+                                            <form action="#" class="agent-contact-form">
+                                                <input type="text" placeholder="Nombre">
+                                                <input type="text" placeholder="Correo">
+                                                <textarea placeholder="Mensaje"></textarea>
+                                                <button type="submit" class="site-btn">Enviar Mensaje</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="map-widget">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14376.077865872314!2d-73.879277264103!3d40.757667781624285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1546528920522" style="border:0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+        </section>
+        <!--  Section end -->
+        
+
+
+
+
+	<!--====== Javascripts & Jquery ======-->
+        <script src="assets/js/jquery-3.2.1.min.js"></script>
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="assets/js/jquery.nice-select.min.js"></script>
+        <script src="assets/js/jquery.slicknav.min.js"></script>
+        <script src="assets/js/jquery-ui.min.js"></script>
+
+        <script src="assets/js/main.js"></script>
+
+        <!-- Js Plugins -->
+
+        <script src="assets/js/owl.carousel.min.js"></script>
+        <script src="assets/js/main2.js"></script>
+
+    }
+    else
+    {
+        <p>No se encontraron resultados</p>
+    }

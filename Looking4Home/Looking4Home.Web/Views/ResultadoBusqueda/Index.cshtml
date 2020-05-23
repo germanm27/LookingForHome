@@ -1,0 +1,256 @@
+﻿@using Pagination
+@using Pagination.Models
+@using Looking4Home.BL
+@using Lookig4Home.Web.Models
+@model IPageSourceModel<Producto, SearchModel>
+
+@{
+    ViewBag.Title = "Vista Busqueda";
+}
+
+@{
+    var results = Model.OrderBy(s => s.Descripcion).Query();
+    var productos = results.Results.Select(r => r);
+    var pages = results.LinkPages(PageLinker.CreateDynamic(true, "<<", ">>"));
+}
+
+
+@if (Model != null)
+{
+        <!----------------------------------------------->
+
+
+    <hr>
+
+
+    <!-- Search Result Section end -->
+    <section class="search-result-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 p-0" style="max-width: 40%">
+                    <div class="search-result-map">
+                        <style>
+                            #map {
+                                height: 100%;
+                                width: 100%;
+                            }
+                        </style>
+
+                        <div id="map"></div>
+
+                    </div>
+                </div>
+                <div class="col-xl-6 p-0" style="max-width: 60%;">
+                    >
+                    <div class="search-results">
+                        <!--INICIO-->
+                        @foreach (var producto in productos.Take(5)
+                    .OrderBy(r => r.Id))
+                        {
+
+                            <div class="col-lg-9">
+                                <div class="property-list">
+                                    <div class="single-property-item">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="property-pic">
+                                                    <img src="@(ViewBag.adminWebsiteUrl + producto.UrlImagen)" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="property-text">
+                                                    <div class="s-text">@producto.Etiqueta.Descripcion</div>
+
+                                                    <div style="padding-top:20px;" class="room-price">
+                                                        <span>Precio:</span>
+                                                        <h5>L. @producto.Precio</h5>
+                                                    </div>
+
+                                                    <div class="properties-location">
+                                                        <i class="fa fa-map-marker"></i>@producto.Localizacion
+                                                    </div>
+                                                    <div class="properties-location">
+                                                        <i class="fas fa-address-card"></i>Vendedor: @producto.Vendedor.Nombre
+                                                    </div>
+
+                                                    <p>
+                                                        @producto.Descripcion
+                                                    </p>
+                                                    <ul class="room-features">
+                                                        <li>
+                                                            <i class="fa fa-arrows"></i>
+                                                            <p>@producto.Metros<span> M2</span> </p>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-bed"></i>
+                                                            <p>
+                                                                @producto.Habitaciones
+                                                                @if (producto.Habitaciones == 1)
+                                                                {
+                                                                    <span>  Habitacion</span>
+                                                                }
+                                                                else if (producto.Habitaciones != 1)
+                                                                {
+                                                                    <span>  Habitaciones</span>
+                                                                }
+                                                            </p>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-bath"></i>
+                                                            <p>
+                                                                @producto.Bano
+                                                                @if (producto.Bano == 1)
+                                                                {
+                                                                    <span>  Baño</span>
+                                                                }
+                                                                else if (producto.Bano != 1)
+                                                                {
+                                                                    <span>  Baños</span>
+                                                                }
+                                                            </p>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-car"></i>
+                                                            <p>
+                                                                @producto.Parking
+                                                                @if (producto.Parking == 1)
+                                                                {
+                                                                    <span>  Estacionamiento</span>
+                                                                }
+                                                                else if (producto.Parking != 1)
+                                                                {
+                                                                    <span>  Estacionamientos</span>
+                                                                }
+                                                            </p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                @using (Html.BeginForm("Index2", "Home", FormMethod.Post)) //aqui
+                                                {
+
+                                                    <input id="buscar" name="buscar" type="hidden" placeholder="" value="@producto.Id" style="border: 0;">
+                                                        <!--<a href="" class="readmore-btn">Leer Mas</a>-->
+                                                    <div style="padding-top:20px;"><button style="padding: 8px 5px 10px; text-align: left;" class="site-btn" type="submit">Ver mas</button></div>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <hr style="padding-left:10px">
+                                <input class="lat-long" type="hidden" value="@producto.Latitude,@producto.Longitud" />
+
+                        }
+                        <!-- Paginacion -->
+
+                        <div class="site-pagination" style="padding-left: 310px">
+
+                            <p>@pages.TotalItemCount registros en @pages.TotalPageCount @(pages.TotalPageCount == 1 ? "página" : "páginas")</p>
+                            <p>Página actual: @pages.First(p => p.IsRequestedPage).LinkPageBase1</p>
+
+                            @foreach (var page in pages)
+                            {
+                                if (page.IsPageRange)
+                                {
+                                    <a>...</a>
+                                }
+                                else
+                                {
+                                    if (page.IsRequestedPage)
+                                    {
+                                        <a class="active"><strong>@page.LinkText</strong></a>
+                                    }
+                                    else
+                                    {
+                                        <a>@Html.PageLink(page)</a>
+                                    }
+                                }
+                            }
+
+                            <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Search Result Section end -->
+
+}
+<hr>
+
+<input id="q" type="hidden" value="@Request.QueryString["q"]">
+<input id="w" type="hidden" value="@Request.QueryString["w"]">
+
+
+@section scripts {    
+    <script>
+
+        $('.site-pagination a').each(function () {
+
+            var tieneClassAttr = $(this).attr('class');
+            if (!tieneClassAttr) {
+                var url = $(this).attr('href');
+                if (url) {
+                    var q = $('#q').val();
+                    var w = $('#w').val();
+                    if (q && w) {
+                        $(this).attr('href', url + '&q=' + q + '&w=' + w);
+                    }
+                }
+            }
+        });
+
+        //Array of markers
+        var markers = [];
+        var map;
+
+        function initMap() {
+            //Opciones de Mapa
+            var options = {
+                zoom: 14,
+                center: { lat: 15.50417, lng: -88.025 }
+            }
+
+            //Nuevo Mapa
+            map = new google.maps.Map(document.getElementById('map'), options);
+
+            $('.lat-long').each(function () {
+                var arr = $(this).val().split(',');
+                if (arr.length > 0) {
+                    addMarker({ lat: parseFloat(arr[0]), lng: parseFloat(arr[1]) });
+                }
+            });
+        }
+
+        // Agregar funcion de marcador
+        function addMarker(coords) {
+            var latlng = new google.maps.LatLng(coords.lat, coords.lng);
+            var marker = new google.maps.Marker({
+                position: coords,
+                map: map,
+                icon: '@Url.Content("~/assets/img/marker.png")'
+            });
+
+            markers.push(marker);
+        }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEg7Q9nr2V_cDfRsKSgvC9CeiA68aSz18&callback=initMap">
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Looking4Home.BL.Producto>
+
+@{
+    ViewBag.Title = "Productos";
+}
+
+<h2>Productos</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Producto", "Crear")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vendedor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Etiqueta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Localizacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UrlImagen)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendedor.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Etiqueta.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Localizacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            <img  src="@item.UrlImagen" alt="Imagen" style="width:64px; height:auto;" />
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Editar", new { id=item.Id }) |
+            @Html.ActionLink("Detalle", "Detalle", new { id=item.Id }) |
+            @Html.ActionLink("Eliminar", "Eliminar", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
